@@ -6,4 +6,7 @@ target 'wuYeDuan' do
   # use_frameworks!
 
   pod 'AFNetworking', '~> 3.1.0'
+  pod 'MBProgressHUD'
+  pod 'SDWebImage'
+  
 end
