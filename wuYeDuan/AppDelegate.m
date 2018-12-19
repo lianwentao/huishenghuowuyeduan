@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "WJTabBarController.h"
+#import "LoginViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -16,11 +17,33 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    WJTabBarController *tabVC = [[WJTabBarController alloc]init];
-    self.window.rootViewController = tabVC;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(change:) name:@"change" object:nil];
+    
+    
+    [self setbar];
+    
     return YES;
 }
-
+- (void)change: (NSNotification *)notification
+{
+    [self setbar];
+}
+- (void)setbar
+{
+    NSUserDefaults *myUD=[NSUserDefaults standardUserDefaults];
+    if([myUD objectForKey:@"username"]==nil)
+    {
+        LoginViewController *vc = [[LoginViewController alloc] init];
+        UINavigationController *navCtrlr = [[UINavigationController alloc]initWithRootViewController:vc];
+        [self.window setRootViewController:navCtrlr];
+        self.window.backgroundColor = [UIColor whiteColor];
+    }
+    else{
+        WJTabBarController *tabVC = [[WJTabBarController alloc]init];
+        self.window.rootViewController = tabVC;
+    }
+    [self.window makeKeyAndVisible];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

@@ -53,11 +53,10 @@
     [self setUpOneChildVcWithVc:HomeVC Image:@"menu_index" selectedImage:@"menu_index_tabbar" title:@"首页" tag:0];
     
     ReleaseViewController *ReleaseVC = [[ReleaseViewController alloc]init];
-    [self setUpOneChildVcWithVc:ReleaseVC Image:@"splite" selectedImage:@"" title:@"" tag:1];
+    [self setUpOneChildVcWithVc:ReleaseVC Image:@"" selectedImage:@"" title:@"" tag:1];
     
     MainViewController *MineVC = [[MainViewController alloc] init];
     [self setUpOneChildVcWithVc:MineVC Image:@"menu_my" selectedImage:@"menu_my_tabbar" title:@"我的" tag:2];
-    
 }
 - (void)setUpOneChildVcWithVc:(UIViewController *)Vc Image:(NSString *)image selectedImage:(NSString *)selectedImage title:(NSString *)title tag:(NSInteger)tag
 {
@@ -78,12 +77,12 @@
     
     Vc.navigationItem.title = title;
     
-    if (tag == 2) {
+    if (tag == 1) {
         billImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2.0-57/2.0, -15, 57, 57)];
         [billImageView setImage:[UIImage imageNamed:@"button_find_coal_bg"]];
         [self.tabBar insertSubview:billImageView atIndex:0];
         [Vc.tabBarItem setImageInsets:UIEdgeInsetsMake(-5, 0, 5, 0)];
-        Vc.tabBarItem.tag = 2;
+        Vc.tabBarItem.tag = 1;
     }
     
     [self addChildViewController:nav];
@@ -123,7 +122,7 @@
     [path addLineToPoint:CGPointMake(size.width/2-ww, standOutHeight)];
     layer.path = path.CGPath;
     layer.fillColor = [UIColor whiteColor].CGColor;// 整个背景的颜色
-//    layer.strokeColor = TableViewSepaaratorColor.CGColor;//边框线条的颜色
+    layer.strokeColor = [UIColor groupTableViewBackgroundColor].CGColor;//边框线条的颜色
     layer.lineWidth = 0.5;//边框线条的宽
     // 在要画背景的view上 addSublayer:
     [imageView.layer addSublayer:layer];
@@ -132,7 +131,7 @@
 
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-    if (item.tag == 2) {
+    if (item.tag == 1) {
         [billImageView setImage:[UIImage imageNamed:@"button_find_coal_bg_tabbar"]];
     }else {
         [billImageView setImage:[UIImage imageNamed:@"button_find_coal_bg"]];
@@ -140,7 +139,7 @@
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-//    NSInteger tag = viewController.tabBarItem.tag;
+    NSInteger tag = viewController.tabBarItem.tag;
 //    if (tag == 3 || tag == 2 || tag == 4) {
 //        if (![UserManager isLogin]) {
 //            [UserManager loginInCompletionHandler:^(BOOL loginIn) {
@@ -153,6 +152,7 @@
 //            return YES;
 //        }
 //    }
+    WBLog(@"%ld",tag);
     return YES;
 }
 @end

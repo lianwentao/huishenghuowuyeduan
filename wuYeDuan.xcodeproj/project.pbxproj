@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2861594A21CA48B700E99141 /* UIColor+ColorHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 2861594921CA48B700E99141 /* UIColor+ColorHex.m */; };
+		2861594D21CA4DBA00E99141 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2861594C21CA4DBA00E99141 /* LoginViewController.m */; };
+		2861595121CA57A500E99141 /* MBProgressHUD+TVAssistant.m in Sources */ = {isa = PBXBuildFile; fileRef = 2861594F21CA57A500E99141 /* MBProgressHUD+TVAssistant.m */; };
+		2861595521CA620A00E99141 /* shifuliebiaoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2861595421CA620A00E99141 /* shifuliebiaoViewController.m */; };
 		4743D0292B7D991093F377AC /* libPods-wuYeDuan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E04C6678A2A5672BD316D9F7 /* libPods-wuYeDuan.a */; };
 		84826BD821C48F4800F099C4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84826BD721C48F4800F099C4 /* AppDelegate.m */; };
 		84826BDB21C48F4800F099C4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84826BDA21C48F4800F099C4 /* ViewController.m */; };
@@ -44,6 +48,14 @@
 /* Begin PBXFileReference section */
 		02C0C2B75573F6FDC21CE31B /* Pods-wuYeDuan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wuYeDuan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-wuYeDuan/Pods-wuYeDuan.debug.xcconfig"; sourceTree = "<group>"; };
 		2861593E21CA36B900E99141 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		2861594821CA48B600E99141 /* UIColor+ColorHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorHex.h"; sourceTree = "<group>"; };
+		2861594921CA48B700E99141 /* UIColor+ColorHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorHex.m"; sourceTree = "<group>"; };
+		2861594B21CA4DBA00E99141 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		2861594C21CA4DBA00E99141 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		2861594F21CA57A500E99141 /* MBProgressHUD+TVAssistant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+TVAssistant.m"; sourceTree = "<group>"; };
+		2861595021CA57A500E99141 /* MBProgressHUD+TVAssistant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+TVAssistant.h"; sourceTree = "<group>"; };
+		2861595321CA620A00E99141 /* shifuliebiaoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shifuliebiaoViewController.h; sourceTree = "<group>"; };
+		2861595421CA620A00E99141 /* shifuliebiaoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = shifuliebiaoViewController.m; sourceTree = "<group>"; };
 		84826BD321C48F4800F099C4 /* wuYeDuan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wuYeDuan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84826BD621C48F4800F099C4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		84826BD721C48F4800F099C4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -102,6 +114,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2861594E21CA4DC200E99141 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				2861594B21CA4DBA00E99141 /* LoginViewController.h */,
+				2861594C21CA4DBA00E99141 /* LoginViewController.m */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		2861595221CA61E900E99141 /* ShiFu */ = {
+			isa = PBXGroup;
+			children = (
+				2861595321CA620A00E99141 /* shifuliebiaoViewController.h */,
+				2861595421CA620A00E99141 /* shifuliebiaoViewController.m */,
+			);
+			path = ShiFu;
+			sourceTree = "<group>";
+		};
 		5B7A9C46D3D2CEC09117DC79 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +143,8 @@
 		844A16DD21C4998A00DFA624 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2861595221CA61E900E99141 /* ShiFu */,
+				2861594E21CA4DC200E99141 /* Login */,
 				84EF5F8221CA2FED0037C5A4 /* Home */,
 				84EF5F8321CA2FED0037C5A4 /* Main */,
 				84EF5F8121CA2FED0037C5A4 /* Release */,
@@ -123,6 +155,10 @@
 		844A16DE21C4998A00DFA624 /* Links */ = {
 			isa = PBXGroup;
 			children = (
+				2861595021CA57A500E99141 /* MBProgressHUD+TVAssistant.h */,
+				2861594F21CA57A500E99141 /* MBProgressHUD+TVAssistant.m */,
+				2861594821CA48B600E99141 /* UIColor+ColorHex.h */,
+				2861594921CA48B700E99141 /* UIColor+ColorHex.m */,
 				84EF5F8D21CA328F0037C5A4 /* TooBox.h */,
 				84EF5F8E21CA328F0037C5A4 /* TooBox.m */,
 				84EF5F7A21CA2F460037C5A4 /* Base */,
@@ -394,9 +430,13 @@
 				84826BDB21C48F4800F099C4 /* ViewController.m in Sources */,
 				84826BE621C48F4B00F099C4 /* main.m in Sources */,
 				84EF5F8F21CA32900037C5A4 /* TooBox.m in Sources */,
+				2861595121CA57A500E99141 /* MBProgressHUD+TVAssistant.m in Sources */,
 				84EF5F8921CA31890037C5A4 /* MainViewController.m in Sources */,
 				84826BD821C48F4800F099C4 /* AppDelegate.m in Sources */,
 				84EF5F8621CA317A0037C5A4 /* HomeViewController.m in Sources */,
+				2861595521CA620A00E99141 /* shifuliebiaoViewController.m in Sources */,
+				2861594D21CA4DBA00E99141 /* LoginViewController.m in Sources */,
+				2861594A21CA48B700E99141 /* UIColor+ColorHex.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

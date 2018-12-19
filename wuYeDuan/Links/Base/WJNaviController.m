@@ -7,16 +7,15 @@
 //
 
 #import "WJNaviController.h"
-
 @implementation WJNaviController
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    self.navigationBar.barTintColor = Blue_Text_Commen;
-    self.navigationBar.barTintColor = [UIColor blueColor];
+    self.navigationBar.barTintColor = [UIColor colorWithHexString:@"#5D69FD"];
+    
+    self.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
