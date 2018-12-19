@@ -18,6 +18,9 @@
 		84826BFB21C48F4B00F099C4 /* wuYeDuanUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84826BFA21C48F4B00F099C4 /* wuYeDuanUITests.m */; };
 		84EF5F7F21CA2F770037C5A4 /* WJNaviController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EF5F7C21CA2F770037C5A4 /* WJNaviController.m */; };
 		84EF5F8021CA2F770037C5A4 /* WJTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EF5F7E21CA2F770037C5A4 /* WJTabBarController.m */; };
+		84EF5F8621CA317A0037C5A4 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EF5F8521CA317A0037C5A4 /* HomeViewController.m */; };
+		84EF5F8921CA31890037C5A4 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EF5F8821CA31890037C5A4 /* MainViewController.m */; };
+		84EF5F8C21CA31990037C5A4 /* ReleaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EF5F8B21CA31990037C5A4 /* ReleaseViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +62,12 @@
 		84EF5F7C21CA2F770037C5A4 /* WJNaviController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJNaviController.m; sourceTree = "<group>"; };
 		84EF5F7D21CA2F770037C5A4 /* WJNaviController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WJNaviController.h; sourceTree = "<group>"; };
 		84EF5F7E21CA2F770037C5A4 /* WJTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJTabBarController.m; sourceTree = "<group>"; };
+		84EF5F8421CA317A0037C5A4 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		84EF5F8521CA317A0037C5A4 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		84EF5F8721CA31890037C5A4 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		84EF5F8821CA31890037C5A4 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		84EF5F8A21CA31990037C5A4 /* ReleaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReleaseViewController.h; sourceTree = "<group>"; };
+		84EF5F8B21CA31990037C5A4 /* ReleaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReleaseViewController.m; sourceTree = "<group>"; };
 		C2DAE90394F542B9B8FD7A67 /* Pods-wuYeDuan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wuYeDuan.release.xcconfig"; path = "Pods/Target Support Files/Pods-wuYeDuan/Pods-wuYeDuan.release.xcconfig"; sourceTree = "<group>"; };
 		E04C6678A2A5672BD316D9F7 /* libPods-wuYeDuan.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-wuYeDuan.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -187,6 +196,8 @@
 		84EF5F8121CA2FED0037C5A4 /* Release */ = {
 			isa = PBXGroup;
 			children = (
+				84EF5F8A21CA31990037C5A4 /* ReleaseViewController.h */,
+				84EF5F8B21CA31990037C5A4 /* ReleaseViewController.m */,
 			);
 			path = Release;
 			sourceTree = "<group>";
@@ -194,6 +205,8 @@
 		84EF5F8221CA2FED0037C5A4 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				84EF5F8421CA317A0037C5A4 /* HomeViewController.h */,
+				84EF5F8521CA317A0037C5A4 /* HomeViewController.m */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -201,6 +214,8 @@
 		84EF5F8321CA2FED0037C5A4 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				84EF5F8721CA31890037C5A4 /* MainViewController.h */,
+				84EF5F8821CA31890037C5A4 /* MainViewController.m */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -368,9 +383,12 @@
 			files = (
 				84EF5F8021CA2F770037C5A4 /* WJTabBarController.m in Sources */,
 				84EF5F7F21CA2F770037C5A4 /* WJNaviController.m in Sources */,
+				84EF5F8C21CA31990037C5A4 /* ReleaseViewController.m in Sources */,
 				84826BDB21C48F4800F099C4 /* ViewController.m in Sources */,
 				84826BE621C48F4B00F099C4 /* main.m in Sources */,
+				84EF5F8921CA31890037C5A4 /* MainViewController.m in Sources */,
 				84826BD821C48F4800F099C4 /* AppDelegate.m in Sources */,
+				84EF5F8621CA317A0037C5A4 /* HomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
