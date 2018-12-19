@@ -7,15 +7,12 @@
 //
 
 #import "WJTabBarController.h"
-
+#import "TooBox.h"
 #import "WJNaviController.h"
 
-#import "FindGoodsViewController.h"
-#import "NearbyViewController.h"
-#import "BillViewController.h"
-#import "FriendCycleViewController.h"
-#import "MyViewController.h"
-#import "FriendNewsViewController.h"
+#import "HomeViewController.h"
+#import "ReleaseViewController.h"
+#import "MainViewController.h"
 @interface WJTabBarController ()<UITabBarControllerDelegate> {
     UIImageView *billImageView;
 }
@@ -52,20 +49,14 @@
 
 - (void)setUpAllChildVc
 {
-    FindGoodsViewController *HomeVC = [[FindGoodsViewController alloc] init];
+    HomeViewController *HomeVC = [[HomeViewController alloc] init];
     [self setUpOneChildVcWithVc:HomeVC Image:@"menu_index" selectedImage:@"menu_index_tabbar" title:@"首页" tag:0];
     
-    NearByViewController *FishVC = [[NearByViewController alloc] init];
-    [self setUpOneChildVcWithVc:FishVC Image:@"menu_message" selectedImage:@"menu_message_tabbar" title:@"附近" tag:1];
+    ReleaseViewController *ReleaseVC = [[ReleaseViewController alloc]init];
+    [self setUpOneChildVcWithVc:ReleaseVC Image:@"splite" selectedImage:@"" title:@"" tag:1];
     
-    BillViewController *BillVC = [[BillViewController alloc]init];
-    [self setUpOneChildVcWithVc:BillVC Image:@"splite" selectedImage:@"" title:@"" tag:2];
-    
-    FriendNewsViewController *MessageVC = [[FriendNewsViewController alloc] init];
-    [self setUpOneChildVcWithVc:MessageVC Image:@"menu_friends" selectedImage:@"menu_friends_tabbar" title:@"货运资讯" tag:3];
-    
-    MyViewController *MineVC = [[MyViewController alloc] init];
-    [self setUpOneChildVcWithVc:MineVC Image:@"menu_my" selectedImage:@"menu_my_tabbar" title:@"我的" tag:4];
+    MainViewController *MineVC = [[MainViewController alloc] init];
+    [self setUpOneChildVcWithVc:MineVC Image:@"menu_my" selectedImage:@"menu_my_tabbar" title:@"我的" tag:2];
     
 }
 - (void)setUpOneChildVcWithVc:(UIViewController *)Vc Image:(NSString *)image selectedImage:(NSString *)selectedImage title:(NSString *)title tag:(NSInteger)tag
@@ -132,7 +123,7 @@
     [path addLineToPoint:CGPointMake(size.width/2-ww, standOutHeight)];
     layer.path = path.CGPath;
     layer.fillColor = [UIColor whiteColor].CGColor;// 整个背景的颜色
-    layer.strokeColor = TableViewSepaaratorColor.CGColor;//边框线条的颜色
+//    layer.strokeColor = TableViewSepaaratorColor.CGColor;//边框线条的颜色
     layer.lineWidth = 0.5;//边框线条的宽
     // 在要画背景的view上 addSublayer:
     [imageView.layer addSublayer:layer];
@@ -149,19 +140,19 @@
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    NSInteger tag = viewController.tabBarItem.tag;
-    if (tag == 3 || tag == 2 || tag == 4) {
-        if (![UserManager isLogin]) {
-            [UserManager loginInCompletionHandler:^(BOOL loginIn) {
-                if (loginIn) {
-                    self.selectedIndex = tag;
-                }
-            }];
-            return NO;
-        }else {
-            return YES;
-        } 
-    }
+//    NSInteger tag = viewController.tabBarItem.tag;
+//    if (tag == 3 || tag == 2 || tag == 4) {
+//        if (![UserManager isLogin]) {
+//            [UserManager loginInCompletionHandler:^(BOOL loginIn) {
+//                if (loginIn) {
+//                    self.selectedIndex = tag;
+//                }
+//            }];
+//            return NO;
+//        }else {
+//            return YES;
+//        }
+//    }
     return YES;
 }
 @end

@@ -12,7 +12,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationBar.barTintColor = Blue_Text_Commen;
+//    self.navigationBar.barTintColor = Blue_Text_Commen;
+    self.navigationBar.barTintColor = [UIColor blueColor];
     [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
 }
 
