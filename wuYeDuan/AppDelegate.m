@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "WJTabBarController.h"
 @interface AppDelegate ()
 
 @end
@@ -16,7 +16,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    WJTabBarController *tabVC = [[WJTabBarController alloc]init];
+    self.window.rootViewController = tabVC;
     return YES;
 }
 
