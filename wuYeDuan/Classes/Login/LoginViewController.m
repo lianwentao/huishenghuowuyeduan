@@ -52,7 +52,18 @@
     //_HUD.dimBackground = YES;
     
     //设置对话框文字
-    _HUD.label.text
+    _HUD.label.text = @"登录中...";
+    _HUD.label.font = [UIFont systemFontOfSize:14];
+    
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+        [self log];
+    });
+}
+- (void)log
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+    //2.封装参数
     NSDictionary *dict = @{@"username":@"liuxiaohong",@"password":@"123456"};
     NSString *strurl = [API stringByAppendingString:@"/Api/Login/login"];
     [manager POST:strurl parameters:dict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
