@@ -95,7 +95,7 @@
     _TableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     _TableView.delegate = self;
     _TableView.dataSource = self;
-    //_TableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(post1)];
+    _TableView.bounces = NO;
     [self.view addSubview:_TableView];
 }
 #pragma mark - TableView的代理方法
@@ -147,56 +147,59 @@
         if (indexPath.row==0) {
             tableView.rowHeight = 50;
         }else{
-            CGFloat width = (Main_width-40-45*3)/4;
+            CGFloat width = (Main_width-40-20*3)/4;
             if ((dataArr.count-(indexPath.row-1)*4)/4>=1) {
                 for (int i=0; i<4; i++) {
-                    UILabel *backlabel = [[UILabel alloc] initWithFrame:CGRectMake(20+i*width+45*i, 10, width, 40)];
-                    backlabel.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.1];
+                    UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(20+i*width+20*i, 12, width, width)];
+                    [imageview sd_setImageWithURL:[NSURL URLWithString:[dataArr[i+(indexPath.row-1)*4] objectForKey:@"icon"]]];
+                    imageview.layer.cornerRadius = width/2;
+                    [cell.contentView addSubview:imageview];
+                    
+                    UILabel *backlabel = [[UILabel alloc] initWithFrame:CGRectMake(10+i*(Main_width-20)/4, imageview.frame.size.height+imageview.frame.origin.y+12, (Main_width-20)/4, 15)];
                     backlabel.text = [[dataArr objectAtIndex:i+(indexPath.row-1)*4] objectForKey:@"title"];
-                    backlabel.font = Font(14);
+                    backlabel.font = Font(15);
                     backlabel.textAlignment = NSTextAlignmentCenter;
                     [cell.contentView addSubview:backlabel];
                     
                     UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
-                    but.frame = CGRectMake(15+i*width+45*i, 10, width, 40);
+                    but.frame = CGRectMake(i*Main_width/4, 0, Main_width/4, (Main_width-40-20*3)/4+12+12+15);
                     but.tag = [[[dataArr objectAtIndex:i+(indexPath.row-1)*4] objectForKey:@"id"] integerValue];
-                    [but setTitle:[[dataArr objectAtIndex:i+(indexPath.row-1)*4] objectForKey:@"title"] forState:UIControlStateNormal];
+                    [but setTitle:[[dataArr objectAtIndex:i+(indexPath.row-1)*4] objectForKey:@"type"] forState:UIControlStateNormal];
                     but.titleLabel.font = Font(0.1);
-                    [but addTarget:self action:@selector(push) forControlEvents:UIControlEventTouchUpInside];
+                    [but addTarget:self action:@selector(push:) forControlEvents:UIControlEventTouchUpInside];
                     [cell.contentView addSubview:but];
                 }
             }else{
                 for (int i=0; i<(dataArr.count-(indexPath.row-1)*4); i++) {
-//                    UILabel *backlabel = [[UILabel alloc] initWithFrame:CGRectMake(20+i*width+45*i, 10, width, 40)];
-//                    backlabel.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.1];
-//                    backlabel.text = [[dataArr objectAtIndex:i+indexPath.row*4] objectForKey:@"title"];
-//                    backlabel.font = Font(14);
-//                    backlabel.textAlignment = NSTextAlignmentCenter;
-//                    [cell.contentView addSubview:backlabel];
                     
-                    UILabel *backlabel = [[UILabel alloc] initWithFrame:CGRectMake(20+i*width+45*i, 10, width, 40)];
-                    backlabel.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.1];
+                    UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(20+i*width+20*i, 12, width, width)];
+                    [imageview sd_setImageWithURL:[NSURL URLWithString:[dataArr[i+(indexPath.row-1)*4] objectForKey:@"icon"]]];
+                    imageview.layer.cornerRadius = width/2;
+                    [cell.contentView addSubview:imageview];
+                    
+                    UILabel *backlabel = [[UILabel alloc] initWithFrame:CGRectMake(10+i*(Main_width-20)/4, imageview.frame.size.height+imageview.frame.origin.y+12, (Main_width-20)/4, 15)];
                     backlabel.text = [[dataArr objectAtIndex:i+(indexPath.row-1)*4] objectForKey:@"title"];
-                    backlabel.font = Font(14);
+                    backlabel.font = Font(15);
                     backlabel.textAlignment = NSTextAlignmentCenter;
                     [cell.contentView addSubview:backlabel];
                     
                     UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
-                    but.frame = CGRectMake(20+i*width+45*i, 10, width, 40);
+                    but.frame = CGRectMake(i*Main_width/4, 0, Main_width/4, (Main_width-40-20*3)/4+12+12+15);
                     but.tag = [[[dataArr objectAtIndex:i+(indexPath.row-1)*4] objectForKey:@"id"] integerValue];
-                    [but setTitle:[[dataArr objectAtIndex:i+(indexPath.row-1)*4] objectForKey:@"title"] forState:UIControlStateNormal];
+                    [but setTitle:[[dataArr objectAtIndex:i+(indexPath.row-1)*4] objectForKey:@"type"] forState:UIControlStateNormal];
                     but.titleLabel.font = Font(0.1);
-                    [but addTarget:self action:@selector(push) forControlEvents:UIControlEventTouchUpInside];
+                    [but addTarget:self action:@selector(push:) forControlEvents:UIControlEventTouchUpInside];
                     [cell.contentView addSubview:but];
                 }
             }
+            tableView.rowHeight = (Main_width-40-25*3)/4+12+12+15;
         }
     }
     return cell;
 }
-- (void)push
+- (void)push:(UIButton *)sender
 {
-    [self.navigationController pushViewController:[shifuliebiaoViewController new] animated:YES];
+    WBLog(@"%ld--%@",sender.tag,sender.titleLabel.text);
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
