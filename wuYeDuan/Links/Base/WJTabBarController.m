@@ -53,7 +53,7 @@
     [self setUpOneChildVcWithVc:HomeVC Image:@"menu_index" selectedImage:@"menu_index_tabbar" title:@"首页" tag:0];
     
     ReleaseViewController *ReleaseVC = [[ReleaseViewController alloc]init];
-    [self setUpOneChildVcWithVc:ReleaseVC Image:@"" selectedImage:@"" title:@"" tag:1];
+    [self setUpOneChildVcWithVc:ReleaseVC Image:@"asd" selectedImage:@"" title:@"" tag:1];
     
     MainViewController *MineVC = [[MainViewController alloc] init];
     [self setUpOneChildVcWithVc:MineVC Image:@"menu_my" selectedImage:@"menu_my_tabbar" title:@"我的" tag:2];
@@ -136,6 +136,7 @@
     }else {
         [billImageView setImage:[UIImage imageNamed:@"button_find_coal_bg"]];
     }
+   
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
@@ -153,6 +154,8 @@
 //        }
 //    }
     WBLog(@"%ld",tag);
+    
     return YES;
 }
+
 @end

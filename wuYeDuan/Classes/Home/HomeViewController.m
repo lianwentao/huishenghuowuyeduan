@@ -28,6 +28,7 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    self.navigationController.navigationBar.barTintColor = [UIColor colorWithHexString:@"#5D69FD"];
@@ -53,40 +54,56 @@
     _HUD.label.font = [UIFont systemFontOfSize:14];
     
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-        float progress = 0.0f;
-        while (progress < 1.0f) {
-            progress += 0.01f;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD HUDForView:self.view].progress = progress;
-                
-            });
-            
-        }
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
-        //2.封装参数
-        NSUserDefaults *userinfo = [NSUserDefaults standardUserDefaults];
-        WBLog(@"%@-------%@",[userinfo objectForKey:@"token"],[userinfo objectForKey:@"tokenSecret"]);
-        NSDictionary *dict = @{@"token":[userinfo objectForKey:@"token"],@"tokenSecret":[userinfo objectForKey:@"tokenSecret"]};
-        NSString *strurl = [API stringByAppendingString:@"/Api/AppMenu/menu"];
-        [manager POST:strurl parameters:dict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            WBLog(@"---%@--%@",responseObject,[responseObject objectForKey:@"msg"]);
-            if ([[responseObject objectForKey:@"status"] integerValue]==1) {
-                
-                self->dataArr = [responseObject objectForKey:@"data"];
-                [self createtableview];
-            }else{
-                [MBProgressHUD showToastToView:self.view withText:[responseObject objectForKey:@"msg"]];
-            }
-            
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            WBLog(@"failure--%@",error);
-            [MBProgressHUD showToastToView:self.view withText:@"加载失败"];
-        }];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [_HUD hideAnimated:YES];
+            [self log];
         });
     });
+}
+- (void)log{
+    //[MBProgressHUD HUDForView:self.view].progress = progress;
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+    //2.封装参数
+    NSUserDefaults *userinfo = [NSUserDefaults standardUserDefaults];
+    WBLog(@"%@-------%@",[userinfo objectForKey:@"token"],[userinfo objectForKey:@"tokenSecret"]);
+    NSDictionary *dict = @{@"token":[userinfo objectForKey:@"token"],@"tokenSecret":[userinfo objectForKey:@"tokenSecret"]};
+    NSString *strurl = [API stringByAppendingString:@"/Api/AppMenu/menu"];
+    [manager POST:strurl parameters:dict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        WBLog(@"---%@--%@",responseObject,[responseObject objectForKey:@"msg"]);
+        if ([[responseObject objectForKey:@"status"] integerValue]==1) {
+            
+            self->dataArr = [responseObject objectForKey:@"data"];
+            [self createtableview];
+        }else if([[responseObject objectForKey:@"status"] integerValue]==2){
+            [MBProgressHUD showToastToView:self.view withText:@"登录已失效,请重新登录"];
+            NSUserDefaults *userinfo = [NSUserDefaults standardUserDefaults];
+            [userinfo removeObjectForKey:@"username"];
+            [userinfo removeObjectForKey:@"id"];
+            [userinfo removeObjectForKey:@"token"];
+            [userinfo removeObjectForKey:@"tokenSecret"];
+            NSHTTPCookieStorage *manager = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+            NSArray *cookieStorage = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];
+            for (NSHTTPCookie *cookie in cookieStorage) {
+                [manager deleteCookie:cookie];
+            }
+            [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+        }else{
+            [MBProgressHUD showToastToView:self.view withText:[responseObject objectForKey:@"msg"]];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        WBLog(@"failure--%@",error);
+        [MBProgressHUD showToastToView:self.view withText:@"加载失败"];
+    }];
+}
+#pragma mark -MBProgressHUDDelegate
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    
+    [hud removeFromSuperview];
+    
+    hud = nil;
+    
 }
 - (void)createtableview
 {

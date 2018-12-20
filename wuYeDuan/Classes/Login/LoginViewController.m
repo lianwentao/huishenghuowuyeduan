@@ -56,46 +56,38 @@
     _HUD.label.font = [UIFont systemFontOfSize:14];
     
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-        float progress = 0.0f;
-        while (progress < 1.0f) {
-            progress += 0.01f;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD HUDForView:self.view].progress = progress;
-                
-            });
-            
-        }
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
-        //2.封装参数
-        NSDictionary *dict = @{@"username":@"liuxiaohong",@"password":@"123456"};
-        NSString *strurl = [API stringByAppendingString:@"/Api/Login/login"];
-        [manager POST:strurl parameters:dict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            WBLog(@"---%@--%@",responseObject,[responseObject objectForKey:@"msg"]);
-            if ([[responseObject objectForKey:@"status"] integerValue]==1) {
-                NSUserDefaults *userinfo = [NSUserDefaults standardUserDefaults];
-                // 存储数据
-                [userinfo setObject:[[responseObject objectForKey:@"data"] objectForKey:@"username"] forKey:@"username"];
-                [userinfo setObject:[[responseObject objectForKey:@"data"] objectForKey:@"token"] forKey:@"token"];
-                [userinfo setObject:[[responseObject objectForKey:@"data"] objectForKey:@"tokenSecret"] forKey:@"tokenSecret"];
-                [userinfo setObject:[[responseObject objectForKey:@"data"] objectForKey:@"pwdmd5"] forKey:@"pwdmd5"];
-                [userinfo setObject:[[responseObject objectForKey:@"data"] objectForKey:@"id"] forKey:@"id"];
-                // 立刻同步
-                [userinfo synchronize];
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"change" object:nil userInfo:nil];
-                [self.navigationController popToRootViewControllerAnimated:YES];
-            }else{
-                [MBProgressHUD showToastToView:self.view withText:[responseObject objectForKey:@"msg"]];
-            }
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            WBLog(@"failure--%@",error);
-            [MBProgressHUD showToastToView:self.view withText:@"登录失败"];
-        }];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [_HUD hideAnimated:YES];
-        });
+        [self log];
     });
+}
+- (void)log
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+    //2.封装参数
+    NSDictionary *dict = @{@"username":@"liuxiaohong",@"password":@"123456"};
+    NSString *strurl = [API stringByAppendingString:@"/Api/Login/login"];
+    [manager POST:strurl parameters:dict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        WBLog(@"---%@--%@",responseObject,[responseObject objectForKey:@"msg"]);
+        if ([[responseObject objectForKey:@"status"] integerValue]==1) {
+            NSUserDefaults *userinfo = [NSUserDefaults standardUserDefaults];
+            // 存储数据
+            [userinfo setObject:[[responseObject objectForKey:@"data"] objectForKey:@"username"] forKey:@"username"];
+            [userinfo setObject:[[responseObject objectForKey:@"data"] objectForKey:@"token"] forKey:@"token"];
+            [userinfo setObject:[[responseObject objectForKey:@"data"] objectForKey:@"tokenSecret"] forKey:@"tokenSecret"];
+            [userinfo setObject:[[responseObject objectForKey:@"data"] objectForKey:@"pwdmd5"] forKey:@"pwdmd5"];
+            [userinfo setObject:[[responseObject objectForKey:@"data"] objectForKey:@"id"] forKey:@"id"];
+            // 立刻同步
+            [userinfo synchronize];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"change" object:nil userInfo:nil];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }else{
+            [MBProgressHUD showToastToView:self.view withText:[responseObject objectForKey:@"msg"]];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        WBLog(@"failure--%@",error);
+        [MBProgressHUD showToastToView:self.view withText:@"登录失败"];
+    }];
 }
 #pragma mark -MBProgressHUDDelegate
 - (void)hudWasHidden:(MBProgressHUD *)hud {
