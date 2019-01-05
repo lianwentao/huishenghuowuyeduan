@@ -44,9 +44,7 @@
     //初始化进度框，置于当前的View当中
     static MBProgressHUD *_HUD;
     _HUD =[MBProgressHUD showHUDAddedTo:self.view animated:YES]; //HUD效果添加哪个视图上
-    _HUD.delegate = self;
     _HUD.mode =MBProgressHUDModeIndeterminate;   //加载效果的显示样式
-    [self.view addSubview:_HUD];
     
     //如果设置此属性则当前的view置于后台
     //_HUD.dimBackground = YES;
@@ -57,16 +55,31 @@
     
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         [self log];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [_HUD hideAnimated:YES];
+        });
     });
 }
 - (void)log
 {
+    
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
     //2.封装参数
-    NSDictionary *dict = @{@"username":@"liuxiaohong",@"password":@"123456"};
+    NSDictionary *dict = @{@"username":@"zzl",@"password":@"123456",@"phone_type":@"2"};
     NSString *strurl = [API stringByAppendingString:@"/Api/Login/login"];
     [manager POST:strurl parameters:dict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        
+        // Set the text mode to show only text.
+        hud.mode = MBProgressHUDModeText;
+        
+        // Move to bottm center.
+        hud.offset = CGPointMake(0.f, MBProgressMaxOffset);
+        
+        [hud hideAnimated:YES afterDelay:1.5f];
         WBLog(@"---%@--%@",responseObject,[responseObject objectForKey:@"msg"]);
         if ([[responseObject objectForKey:@"status"] integerValue]==1) {
             NSUserDefaults *userinfo = [NSUserDefaults standardUserDefaults];
@@ -82,18 +95,14 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"change" object:nil userInfo:nil];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }else{
-            [MBProgressHUD showToastToView:self.view withText:[responseObject objectForKey:@"msg"]];
+            hud.label.text = NSLocalizedString([responseObject objectForKey:@"msg"], @"HUD message title");
+            //[MBProgressHUD showToastToView:self.view withText:];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         WBLog(@"failure--%@",error);
-        [MBProgressHUD showToastToView:self.view withText:@"登录失败"];
     }];
 }
-#pragma mark -MBProgressHUDDelegate
-- (void)hudWasHidden:(MBProgressHUD *)hud {
-    [hud removeFromSuperview];
-    hud = nil;
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

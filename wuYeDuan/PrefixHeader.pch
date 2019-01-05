@@ -26,7 +26,6 @@
 
 #import <AFNetworking.h>
 #import <MBProgressHUD.h>
-#import "MBProgressHUD+TVAssistant.h"
 #import <UIImageView+WebCache.h>
 #import "LoginViewController.h"
 

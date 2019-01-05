@@ -54,12 +54,16 @@
     _HUD.label.font = [UIFont systemFontOfSize:14];
     
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+        [self log];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self log];
+            [_HUD hideAnimated:YES];
         });
     });
 }
+
 - (void)log{
+    
+    
     //[MBProgressHUD HUDForView:self.view].progress = progress;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
@@ -69,13 +73,22 @@
     NSDictionary *dict = @{@"token":[userinfo objectForKey:@"token"],@"tokenSecret":[userinfo objectForKey:@"tokenSecret"]};
     NSString *strurl = [API stringByAppendingString:@"/Api/AppMenu/menu"];
     [manager POST:strurl parameters:dict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        
+        // Set the text mode to show only text.
+        hud.mode = MBProgressHUDModeText;
+        
+        // Move to bottm center.
+        hud.offset = CGPointMake(0.f, MBProgressMaxOffset);
+        
+        [hud hideAnimated:YES afterDelay:1.5f];
         WBLog(@"---%@--%@",responseObject,[responseObject objectForKey:@"msg"]);
         if ([[responseObject objectForKey:@"status"] integerValue]==1) {
             
             self->dataArr = [responseObject objectForKey:@"data"];
             [self createtableview];
         }else if([[responseObject objectForKey:@"status"] integerValue]==2){
-            [MBProgressHUD showToastToView:self.view withText:@"登录已失效,请重新登录"];
+            hud.label.text = NSLocalizedString(@"登录已失效,请重新登录", @"HUD message title");
             NSUserDefaults *userinfo = [NSUserDefaults standardUserDefaults];
             [userinfo removeObjectForKey:@"username"];
             [userinfo removeObjectForKey:@"id"];
@@ -88,23 +101,14 @@
             }
             [self.navigationController pushViewController:[LoginViewController new] animated:YES];
         }else{
-            [MBProgressHUD showToastToView:self.view withText:[responseObject objectForKey:@"msg"]];
+            hud.label.text = NSLocalizedString([responseObject objectForKey:@"msg"], @"HUD message title");
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         WBLog(@"failure--%@",error);
-        [MBProgressHUD showToastToView:self.view withText:@"加载失败"];
     }];
 }
-#pragma mark -MBProgressHUDDelegate
 
-- (void)hudWasHidden:(MBProgressHUD *)hud {
-    
-    [hud removeFromSuperview];
-    
-    hud = nil;
-    
-}
 - (void)createtableview
 {
     _TableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, Main_width, Main_Height)];
